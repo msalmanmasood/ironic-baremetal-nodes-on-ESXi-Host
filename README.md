@@ -11,3 +11,4 @@ Ironic use virsh to handle the provisioning state of the virtual overcloud nodes
 Tested and validated on ESXi 6.5 and todate updated CentOS7.3/RHEL7.3 hosts.
 
 
+Replace attached file ssh.py in the ironic modules drivers on the Undercloud/Director/Manager VM.
