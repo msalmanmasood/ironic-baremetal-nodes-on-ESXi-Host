@@ -117,7 +117,7 @@ def _get_boot_device_map(virt_type):
             {'virt_type': virt_type})
 
 
-def _get_command_sets(vmware, use_headless=False):
+def _get_command_sets(virt_type, use_headless=False):
     """Retrieves the virt_type-specific commands to control power
 
     :param virt_type: Hypervisor type (virsh, vmware, vbox, parallels,
@@ -187,6 +187,10 @@ def _get_command_sets(vmware, use_headless=False):
             'get_node_macs': (
                 "vmsvc/device.getdevices {_NodeName_} | "
                 "grep macAddress | awk -F '\"' '{print $2}' || true"),
+	    'set_boot_device': (
+	        "{_BaseCmd_} vmsvc/get.summary {_NodeName_}"),
+    		'get_boot_device': (
+    		"{_BaseCmd_} vmsvc/get.summary {_NodeName_}"),
         }
     elif virt_type == "virsh":
         # NOTE(NobodyCam): changes to the virsh commands will impact CI
@@ -371,7 +375,8 @@ def _parse_driver_info(node):
     key_filename = info.get('ssh_key_filename')
     use_headless = strutils.bool_from_string(info.get('vbox_use_headless',
                                                       False))
-    virt_type = info.get('ssh_virt_type')
+    #virt_type = info.get('ssh_virt_type')  #Changed to enabled VMware ESXi host management
+    virt_type = 'vmware'
     terminal_port = info.get('ssh_terminal_port')
 
     if terminal_port is not None:
